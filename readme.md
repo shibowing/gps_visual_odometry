@@ -1,6 +1,7 @@
 
 
-### This package is only a part of VINS-fUSION, which can help beginner to fuse gps and visual odometry. 
+## This package fuse gps and visual odmetry through optimization method.
+
 
 ## install process
 
