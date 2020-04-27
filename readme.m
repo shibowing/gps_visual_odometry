@@ -1,6 +1,28 @@
 
+
 ### This package is only a part of VINS-fUSION, which can help beginner to fuse gps and visual odometry. 
 
+## install process
+
+1.1 Ubuntu and ROS
+Ubuntu 64-bit 16.04 or 18.04. ROS Kinetic or Melodic. ROS Installation
+
+1.2 Ceres Solver
+
+Follow Ceres Installation. http://ceres-solver.org/installation.html
+
+1.3 catkin make
+
+cd ..
+
+catkin_make
+
+source ~/catkin_ws/devel/setup.bash
+
+
+
+
+## running process
 
 roslaunch global_fusion global_fusion.launch
 
