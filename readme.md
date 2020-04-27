@@ -20,8 +20,6 @@ catkin_make
 source ~/catkin_ws/devel/setup.bash
 
 
-
-
 ## running process
 
 roslaunch global_fusion global_fusion.launch
