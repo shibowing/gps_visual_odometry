@@ -21,12 +21,13 @@ sudo apt-get install libgeographic-dev
 ```
 
 1.4 Build
-
+```
 cd ..
 
 catkin build
 
 source ~/catkin_ws/devel/setup.bash
+```
 
 ## rostopic information
 
