@@ -1,6 +1,9 @@
 
 #include "ros/ros.h"
-#include "globalOpt.h"
+#include <sensor_msgs/NavSatFix.h>
+#include <sensor_msgs/NavSatFix.h>
+#include <sensor_msgs/NavSatFix.h>
+#include "gps_visual_odometry/globalOpt.h"
 #include <sensor_msgs/NavSatFix.h>
 #include <nav_msgs/Odometry.h>
 #include <nav_msgs/Path.h>

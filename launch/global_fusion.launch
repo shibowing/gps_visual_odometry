@@ -1,4 +1,4 @@
 <launch>
-    <node name="global_fusion" pkg="global_fusion" type="global_fusion_node" output="log" /> 
-    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find global_fusion)/vins_rviz_config.rviz" />
+    <node name="gps_visual_odometry" pkg="gps_visual_odometry" type="gps_visual_odometry_node" output="log" /> 
+    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find gps_visual_odometry)/vins_rviz_config.rviz" />
 </launch>

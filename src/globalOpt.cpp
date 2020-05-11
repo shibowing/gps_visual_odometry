@@ -1,7 +1,7 @@
 
 
-#include "globalOpt.h"
-#include "Factors.h"
+#include "gps_visual_odometry/globalOpt.h"
+#include "gps_visual_odometry/Factors.h"
 
 GlobalOptimization::GlobalOptimization()
 {
