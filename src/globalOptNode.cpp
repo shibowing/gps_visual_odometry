@@ -17,7 +17,30 @@
 #include <queue>
 #include <mutex>
 
+
+template <typename T>
+T readParam(ros::NodeHandle &n, std::string name)
+{
+    T ans;
+    if (n.getParam(name, ans))
+    {
+        ROS_INFO_STREAM("Loaded " << name << ": " << ans);
+    }
+    else
+    {
+        ROS_ERROR_STREAM("Failed to load " << name);
+        n.shutdown();
+    }
+    return ans;
+}
+
+
+
+double vio_trans_cov, vio_rotation_cov;
+
 GlobalOptimization globalEstimator;
+
+
 ros::Publisher pub_global_odometry, pub_global_path, pub_car;
 nav_msgs::Path *global_path;
 double last_vio_t = -1;
@@ -35,7 +58,7 @@ void publish_car_model(double t, Eigen::Vector3d t_w_car, Eigen::Quaterniond q_w
     car_mesh.action = visualization_msgs::Marker::ADD;
     car_mesh.id = 0;
 
-    car_mesh.mesh_resource = "package://global_fusion/models/car.dae";
+    car_mesh.mesh_resource = "package://gps_visual_odometry/models/car.dae";
 
     Eigen::Matrix3d rot;
     rot << 0, 0, -1, 0, -1, 0, -1, 0, 0;
@@ -88,7 +111,7 @@ void vio_callback(const nav_msgs::Odometry::ConstPtr &pose_msg)
     vio_q.z() = pose_msg->pose.pose.orientation.z;
     
     // step2: begin optimize process ->current_global_pose=pre_global_pose*odom
-    globalEstimator.inputOdom(t, vio_t, vio_q);
+    globalEstimator.inputOdom(t, vio_t, vio_q, vio_trans_cov,vio_rotation_cov);
 
 
     m_buf.lock();
@@ -165,13 +188,16 @@ void vio_callback(const nav_msgs::Odometry::ConstPtr &pose_msg)
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "globalEstimator");
+    ros::init(argc, argv, "gps_visual_odometry_node");
     ros::NodeHandle n("~");
+    
+    vio_trans_cov=readParam<double>(n, "vio_trans_cov");
+    vio_rotation_cov=readParam<double>(n, "vio_rotation_cov");
 
     global_path = &globalEstimator.global_path;
-
-    ros::Subscriber sub_GPS = n.subscribe("/gps", 100, GPS_callback);
-    ros::Subscriber sub_vio = n.subscribe("/vins_estimator/odometry", 100, vio_callback);
+    
+    ros::Subscriber sub_GPS = n.subscribe("/GPS_TOPIC", 100, GPS_callback);
+    ros::Subscriber sub_vio = n.subscribe("/VIO_TOPIC", 100, vio_callback);
     pub_global_path = n.advertise<nav_msgs::Path>("global_path", 100);
     pub_global_odometry = n.advertise<nav_msgs::Odometry>("global_odometry", 100);
     pub_car = n.advertise<visualization_msgs::MarkerArray>("car_model", 1000);

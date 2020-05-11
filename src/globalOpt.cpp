@@ -3,6 +3,7 @@
 #include "gps_visual_odometry/globalOpt.h"
 #include "gps_visual_odometry/Factors.h"
 
+
 GlobalOptimization::GlobalOptimization()
 {
 	initGPS = false;
@@ -29,8 +30,11 @@ void GlobalOptimization::GPS2XYZ(double latitude, double longitude, double altit
 }
 
 // receive current pose of vio odometry  
-void GlobalOptimization::inputOdom(double t, Eigen::Vector3d OdomP, Eigen::Quaterniond OdomQ)
-{  
+void GlobalOptimization::inputOdom(double t, Eigen::Vector3d OdomP, Eigen::Quaterniond OdomQ, double Tcov,double Rcov)
+{
+    vio_trans_cov=Tcov;
+    vio_rotate_cov=Rcov;
+
 	mPoseMap.lock();
     
     //step1: save current vio pose in the buffer (the frequnce of vio much higher than GPS)
@@ -161,7 +165,7 @@ void GlobalOptimization::optimize()
                     // this is parameter that realted to buid residule      
                     ceres::CostFunction* vio_function = RelativeRTError::Create(iPj.x(), iPj.y(), iPj.z(),
                                                                                 iQj.w(), iQj.x(), iQj.y(), iQj.z(),
-                                                                                0.1, 0.01);
+                                                                                vio_trans_cov, vio_rotate_cov);
                     // this is parameter that you want to optimize                                                  
                     problem.AddResidualBlock(vio_function, NULL, q_array[i], t_array[i], q_array[i+1], t_array[i+1]);
 

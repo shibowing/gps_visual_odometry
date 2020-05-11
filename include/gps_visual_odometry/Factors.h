@@ -101,7 +101,7 @@ struct RelativeRTError
 	//vio related pose constraints
 	static ceres::CostFunction* Create(const double t_x, const double t_y, const double t_z,
 									   const double q_w, const double q_x, const double q_y, const double q_z,
-									   const double t_var, const double q_var) 
+									    const double t_var, const double q_var)
 	{
 	  return (new ceres::AutoDiffCostFunction<
 	          RelativeRTError, 6, 4, 3, 4, 3>(  //6 is the dimension of residule, 4 is the dimension of qutaterion block in i frame(block 0), 3 is the number of block 1 (pose) 

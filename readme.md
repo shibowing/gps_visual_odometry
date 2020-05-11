@@ -28,6 +28,25 @@ catkin build
 
 source ~/catkin_ws/devel/setup.bash
 
+## rostopic information
+
+1.1 You can change the topic through global_fusion.launch file
+```
+  <remap from="/VIO_TOPIC" to="/vins_estimator/odometry" />
+  <remap from="/GPS_TOPIC" to="/gps" />
+
+
+  VIO_Odometry: /VIO_TOPIC    Topic Format: nav_msgs/Odometry
+  Link: http://docs.ros.org/melodic/api/nav_msgs/html/msg/Odometry.html
+  GPS_Odometry: /GPS_TOPIC    Topic Format: sensor_msgs/NavSatFix
+  Link: http://docs.ros.org/melodic/api/sensor_msgs/html/msg/NavSatFix.html
+```
+1.2 You can change the VIO odometry's covariance through following line. 
+    GPS' covariance is depended by GPS's ros message.
+```
+ <param name = "vio_trans_cov" type="double" value = "0.1"/>
+ <param name = "vio_rotation_cov" type="double" value = "0.01"/>
+```
 
 ## running process
 

@@ -21,7 +21,7 @@ public:
 	GlobalOptimization();
 	~GlobalOptimization();
 	void inputGPS(double t, double latitude, double longitude, double altitude, double posAccuracy);
-	void inputOdom(double t, Eigen::Vector3d OdomP, Eigen::Quaterniond OdomQ);
+	void inputOdom(double t, Eigen::Vector3d OdomP, Eigen::Quaterniond OdomQ, double Tcov,double Rcov);
 	void getGlobalOdom(Eigen::Vector3d &odomP, Eigen::Quaterniond &odomQ);
 	nav_msgs::Path global_path;
 
@@ -42,5 +42,8 @@ private:
 	Eigen::Vector3d lastP;
 	Eigen::Quaterniond lastQ;
 	std::thread threadOpt;
+
+	double vio_trans_cov;
+	double vio_rotate_cov;
 
 };

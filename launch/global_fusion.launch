@@ -1,4 +1,9 @@
 <launch>
-    <node name="gps_visual_odometry" pkg="gps_visual_odometry" type="gps_visual_odometry_node" output="log" /> 
-    <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find gps_visual_odometry)/vins_rviz_config.rviz" />
+      <node name="gps_visual_odometry" pkg="gps_visual_odometry" type="gps_visual_odometry_node" output="log">
+        <remap from="/VIO_TOPIC" to="/vins_estimator/odometry" />
+        <remap from="/GPS_TOPIC" to="/gps" />
+        <param name = "vio_trans_cov" type="double" value = "0.1"/>
+        <param name = "vio_rotation_cov" type="double" value = "0.01"/>
+     </node>
+      <node name="rvizvisualisation" pkg="rviz" type="rviz" output="log" args="-d $(find gps_visual_odometry)/vins_rviz_config.rviz" />
 </launch>

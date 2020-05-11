@@ -30,11 +30,12 @@ catkin_package()
 
 add_library(${PROJECT_NAME}
   src/globalOpt.cpp
-)
+
+        )
 add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 add_executable(${PROJECT_NAME}_node 
-  src/globalOptNode.cpp
+  src/globalOptNode.cpp 
 )
 target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME} ${catkin_LIBRARIES} ${CERES_LIBRARIES} ${GeographicLib_LIBRARIES}) 
 
