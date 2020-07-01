@@ -1,6 +1,6 @@
 
 
-## This package fuse gps and visual odmetry through optimization method taken from this work[1].
+## This package fuse gps and visual odmetry through optimization method refer from this work[1].
 
 
 ## install process
