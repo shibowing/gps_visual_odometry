@@ -1,6 +1,6 @@
 
 
-## This package fuse gps and visual odmetry through optimization method.
+## This package fuse gps and visual odmetry through optimization method taken from this work[1].
 
 
 ## install process
@@ -56,3 +56,5 @@ roslaunch gps_visual_odometry global_fusion.launch
 rosbag play 2020-04-21-00-24-44.bag
 
 The link for test data: https://drive.google.com/open?id=1Zw4d80cI9uji_f8fyyLxhBRHsLWDgh7y
+
+【1】Qin, Tong, et al. "A general optimization-based framework for local odometry estimation with multiple sensors." arXiv preprint arXiv:1901.03638 (2019).
